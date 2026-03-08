@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found | US Architects</title>
+    <meta name="description" content="The page you are looking for does not exist. Return to US Architects home page.">
+    <meta name="author" content="Rushikesh Pattiwar">
+    <meta name="developer" content="Rushikesh Pattiwar">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="./assets/favicon/favicon.svg">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="./assets/css/style.css">
+
+    <style>
+        .error-page {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: var(--bg-secondary);
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .error-container {
+            z-index: 2;
+            max-width: 600px;
+        }
+
+        .error-code {
+            font-family: var(--font-heading);
+            font-size: clamp(8rem, 20vw, 15rem);
+            font-weight: 700;
+            line-height: 1;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            opacity: 0.1;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .error-title {
+            font-family: var(--font-heading);
+            font-size: var(--text-4xl);
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+
+        .error-description {
+            font-size: var(--text-lg);
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            line-height: 1.6;
+        }
+
+        .error-actions {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .back-home-btn {
+            padding: 1rem 2.5rem;
+            font-weight: 600;
+        }
+
+        /* Abstract Architectural Shapes for 404 */
+        .bg-shape {
+            position: absolute;
+            background: var(--primary-color);
+            opacity: 0.03;
+            z-index: 1;
+        }
+
+        .shape-1 {
+            width: 40vw;
+            height: 1px;
+            top: 30%;
+            left: -10%;
+            transform: rotate(-45deg);
+        }
+
+        .shape-2 {
+            width: 1px;
+            height: 60vh;
+            top: 10%;
+            right: 20%;
+            transform: rotate(15deg);
+        }
+
+        .shape-3 {
+            width: 300px;
+            height: 300px;
+            border: 1px solid var(--primary-color);
+            bottom: -100px;
+            left: -50px;
+            border-radius: 50%;
+        }
+
+        @media (max-width: 768px) {
+            .error-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Rushikesh Pattiwar",
+      "jobTitle": "Developer"
+    }
+    </script>
+</head>
+
+<body>
+    <div class="error-page">
+        <div class="error-code">404</div>
+
+        <!-- Abstract Shapes -->
+        <div class="bg-shape shape-1"></div>
+        <div class="bg-shape shape-2"></div>
+        <div class="bg-shape shape-3"
+            style="background: url('./assets/images/modern_apartment_hero.png') center/cover; opacity: 0.4; width: 100%; height: 100%; top: 0; left: 0; border: none; border-radius: 0;">
+        </div>
+
+        <div class="error-container">
+            <h1 class="error-title">404 Error</h1>
+            <p class="error-description">
+                The coordinates you requested do not exist within our current architectural framework.
+                The page may have been relocated or exists in a parallel design phase.
+            </p>
+            <div class="error-actions">
+                <a href="index.html" class="cta-button back-home-btn">Return to Studio</a>
+                <a href="index.html#projects" class="cta-button back-home-btn"
+                    style="background: transparent; border: 1px solid var(--primary-color); color: var(--primary-color); box-shadow: none;">View
+                    Projects</a>
+            </div>
+            <p style="margin-top: 5rem; opacity: 0.5; font-size: 0.8rem;">
+                &copy; 2025 US Architects | Developed by Atharva Kulkarni
+            </p>
+        </div>
+    </div>
+
+    <!-- Attribution in code only -->
+    <!-- Developed by Atharva Kulkarni on frontend only -->
+    <!-- Metadata reflects Rushikesh Pattiwar -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (typeof VanillaTilt !== 'undefined') {
+                VanillaTilt.init(document.querySelector(".error-container"), {
+                    max: 5,
+                    speed: 400,
+                    glare: true,
+                    "max-glare": 0.1,
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
