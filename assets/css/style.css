@@ -259,8 +259,7 @@ html[data-theme='dark'] {
     .gallery-item {
         flex: 0 0 clamp(120px, 60vw, 300px);
         height: auto;
-        aspect-ratio: 4/3;
-        /* Forces container to shrink with the image */
+        /* Let the image define the height completely to avoid padding letterboxes */
     }
 
     .contact-content {
@@ -905,8 +904,8 @@ html {
 .gallery-item {
     flex: 0 0 clamp(200px, 35vw, 450px);
     /* Smaller items */
-    height: clamp(150px, 40vw, 260px);
-    /* Dynamic height that shrinks on smaller screens */
+    height: auto;
+    /* Auto height allows container to perfectly snap to image dimensions without white padding */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -951,7 +950,11 @@ html {
 
 .gallery-item img {
     width: 100%;
-    height: 100%;
+    height: auto;
+    display: block;
+    /* prevents inline baseline gap */
+    border-radius: 8px;
+    /* move radius to image since container fits it precisely */
     object-fit: contain;
     /* Prevents cropping */
     background: transparent;

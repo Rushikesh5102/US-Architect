@@ -328,36 +328,127 @@ function initializeSeamlessGallery() {
             container.scrollLeft = scrollLeft - walk;
         });
 
-        // Lightbox
+        // Lightbox Global State
         const lightbox = document.getElementById('image-lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
         const lightboxCaption = document.getElementById('lightbox-caption');
+        const prevBtn = document.querySelector('.lightbox-prev');
+        const nextBtn = document.querySelector('.lightbox-next');
 
-        allItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const img = item.querySelector('img');
-                if (lightboxImg && lightbox) {
-                    lightboxImg.src = img.src;
-                    if (lightboxCaption) lightboxCaption.textContent = img.alt;
-                    lightbox.style.display = 'flex';
-                    setTimeout(() => lightbox.classList.add('active'), 10);
-                    document.body.style.overflow = 'hidden';
+        let currentLightboxImages = [];
+        let currentImageIndex = 0;
+
+        // Build the global image list from original items only (not clones)
+        function buildInitialGalleryArrays() {
+            const interiorItems = Array.from(document.querySelectorAll('#gallery-track-interior .gallery-item:not(.clone) img'));
+            const vizItems = Array.from(document.querySelectorAll('#gallery-track-visualization .gallery-item:not(.clone) img'));
+            // Fallback if clone class wasn't strictly added
+            if (interiorItems.length === 0) {
+                return Array.from(document.querySelectorAll('.gallery-item img'));
+            }
+            return [...interiorItems, ...vizItems];
+        }
+
+        // Fallback: Populate list of all images if tracking globally
+        currentLightboxImages = Array.from(document.querySelectorAll('.gallery-item img'));
+
+        // Function to update the lightbox content based on index
+        function updateLightboxImage(index) {
+            if (!currentLightboxImages.length || !lightboxImg) return;
+
+            // Handle looping
+            if (index < 0) {
+                currentImageIndex = currentLightboxImages.length - 1;
+            } else if (index >= currentLightboxImages.length) {
+                currentImageIndex = 0;
+            } else {
+                currentImageIndex = index;
+            }
+
+            const newImg = currentLightboxImages[currentImageIndex];
+            lightboxImg.src = newImg.src;
+            if (lightboxCaption) {
+                lightboxCaption.textContent = newImg.alt;
+            }
+        }
+
+        // Attach click events to ALL gallery items (including clones) to open lightbox
+        const allGalleryItems = document.querySelectorAll('.gallery-item');
+        allGalleryItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                const clickedImg = item.querySelector('img');
+                if (!clickedImg || !lightbox || !lightboxImg) return;
+
+                // Re-build fresh array of all currently visible original images (deduplication)
+                // A simple way to get unique images by src
+                const allImgs = Array.from(document.querySelectorAll('.gallery-item img'));
+                const uniqueImgs = [];
+                const seenSrcs = new Set();
+                for (let img of allImgs) {
+                    if (!seenSrcs.has(img.src)) {
+                        uniqueImgs.push(img);
+                        seenSrcs.add(img.src);
+                    }
                 }
+                currentLightboxImages = uniqueImgs;
+
+                // Find the index of the clicked image
+                currentImageIndex = currentLightboxImages.findIndex(img => img.src === clickedImg.src);
+                if (currentImageIndex === -1) currentImageIndex = 0; // Fallback
+
+                updateLightboxImage(currentImageIndex);
+
+                lightbox.style.display = 'flex';
+                setTimeout(() => lightbox.classList.add('active'), 10);
+                document.body.style.overflow = 'hidden';
             });
         });
-    }
 
-    const lightbox = document.getElementById('image-lightbox');
-    if (lightbox) {
-        const closeLightbox = () => {
-            lightbox.classList.remove('active');
-            setTimeout(() => lightbox.style.display = 'none', 400);
-            document.body.style.overflow = 'auto';
-        };
-        document.querySelector('.lightbox-close')?.addEventListener('click', closeLightbox);
-        lightbox.addEventListener('click', (e) => {
-            if (e.target === lightbox) closeLightbox();
-        });
+        if (lightbox) {
+            const closeLightbox = () => {
+                lightbox.classList.remove('active');
+                setTimeout(() => lightbox.style.display = 'none', 400);
+                document.body.style.overflow = 'auto';
+            };
+
+            // Close on X click
+            document.querySelector('.lightbox-close')?.addEventListener('click', closeLightbox);
+
+            // Close on background click (but not on image or arrows)
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+
+            // Next/Prev Button Event Listeners
+            if (prevBtn) {
+                prevBtn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Prevent closing lightbox
+                    updateLightboxImage(currentImageIndex - 1);
+                });
+            }
+
+            if (nextBtn) {
+                nextBtn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Prevent closing lightbox
+                    updateLightboxImage(currentImageIndex + 1);
+                });
+            }
+
+            // Keyboard Navigation (Left, Right, Escape)
+            document.addEventListener('keydown', (e) => {
+                if (lightbox.classList.contains('active')) {
+                    if (e.key === 'Escape') {
+                        closeLightbox();
+                    } else if (e.key === 'ArrowLeft') {
+                        updateLightboxImage(currentImageIndex - 1);
+                    } else if (e.key === 'ArrowRight') {
+                        updateLightboxImage(currentImageIndex + 1);
+                    }
+                }
+            });
+        }
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeLightbox();
         });
