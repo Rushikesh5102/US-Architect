@@ -258,12 +258,29 @@ html[data-theme='dark'] {
 
     .gallery-item {
         flex: 0 0 clamp(120px, 60vw, 300px);
-        height: 200px;
+        height: auto;
+        aspect-ratio: 4/3;
+        /* Forces container to shrink with the image */
     }
 
     .contact-content {
-        grid-template-columns: 1fr;
+        flex-direction: column;
         gap: 1.5rem;
+    }
+
+    .projects-header {
+        margin-bottom: 0.5rem;
+    }
+
+    .portfolio-row-title {
+        margin-top: 1.5rem;
+        margin-bottom: 0;
+    }
+
+    .gallery-container {
+        padding: 0;
+        margin-top: -15px;
+        /* Pulls the gallery up to eat the invisible transform padding gap */
     }
 }
 
@@ -888,15 +905,15 @@ html {
 .gallery-item {
     flex: 0 0 clamp(200px, 35vw, 450px);
     /* Smaller items */
-    height: 260px;
-    /* Reduced height for tighter rows */
+    height: clamp(150px, 40vw, 260px);
+    /* Dynamic height that shrinks on smaller screens */
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 8px;
     overflow: hidden;
-    margin: 0 5px;
-    /* Reduced horizontal margin */
+    margin: 0 2px;
+    /* Tighter horizontal margin */
     background: transparent;
     position: relative;
     transform-origin: center center;
@@ -937,7 +954,7 @@ html {
     height: 100%;
     object-fit: contain;
     /* Prevents cropping */
-    background: #fdfdfd;
+    background: transparent;
     pointer-events: none;
 }
 
@@ -973,14 +990,19 @@ html {
 
 
 .contact-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-wrap: wrap;
     gap: 2rem;
-    /* Reduced gap */
-    align-items: center;
+    align-items: stretch;
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+}
+
+.contact-form-container,
+.contact-info {
+    flex: 1 1 400px;
+    /* Minimum width of 400px before wrapping to column */
 }
 
 .contact-form {
