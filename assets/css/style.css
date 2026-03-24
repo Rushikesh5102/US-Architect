@@ -88,6 +88,7 @@
     --nav-bg: rgba(255, 255, 255, 0.8);
     --nav-bg-scrolled: rgba(255, 255, 255, 0.95);
     --nav-border: rgba(0, 0, 0, 0.1);
+    --input-border: #e5e7eb;
 }
 
 /* Dark mode overrides */
@@ -104,6 +105,8 @@ html[data-theme='dark'] {
     --nav-bg: rgba(17, 24, 39, 0.8);
     --nav-bg-scrolled: rgba(17, 24, 39, 0.95);
     --nav-border: rgba(255, 255, 255, 0.05);
+    --input-border: #4b5563;
+    color-scheme: dark;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -120,6 +123,8 @@ html[data-theme='dark'] {
         --nav-bg: rgba(17, 24, 39, 0.8);
         --nav-bg-scrolled: rgba(17, 24, 39, 0.95);
         --nav-border: rgba(255, 255, 255, 0.05);
+        --input-border: #4b5563;
+        color-scheme: dark;
     }
 }
 
@@ -1134,7 +1139,7 @@ html {
     width: 100%;
     padding: 1.25rem;
     border: none;
-    border-bottom: 2px solid #e5e7eb;
+    border-bottom: 2px solid var(--input-border);
     border-radius: 0;
     font-size: var(--text-lg);
     transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
