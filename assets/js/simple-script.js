@@ -1,242 +1,82 @@
-// US Architects - Core Logic & Interactive Enhancements
-document.addEventListener('DOMContentLoaded', function () {
-    // --- Theme Toggle Logic ---
-    const themeToggle = document.getElementById('themeToggle');
-    const themeIcon = document.getElementById('themeIcon');
+// Function to close menu on mobile when a link is clicked
+function closeMenuOnLinkClick() {
+    const defaultCheckbox = document.getElementById('check');
+    const links = document.querySelectorAll('nav ul li a');
 
-    const currentTheme = localStorage.getItem('theme');
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-    const updateIcon = (isDark) => {
-        if (!themeIcon) return;
-        if (isDark) { // Sun icon for switching back to light
-            themeIcon.innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
-        } else { // Moon icon for switching to dark
-            themeIcon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
-        }
-    };
-
-    if (currentTheme) {
-        document.documentElement.setAttribute('data-theme', currentTheme);
-        updateIcon(currentTheme === 'dark');
-    } else {
-        updateIcon(systemPrefersDark);
+    if (defaultCheckbox) {
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                defaultCheckbox.checked = false;
+            });
+        });
     }
+}
 
+// Ensure execution happens after DOM loads
+document.addEventListener('DOMContentLoaded', () => {
+    closeMenuOnLinkClick();
+
+    // Theme Toggle Logic
+    const themeToggle = document.getElementById('theme-toggle');
+    const storedTheme = localStorage.getItem('theme');
+    
+    if (storedTheme) {
+        document.documentElement.setAttribute('data-theme', storedTheme);
+        updateThemeIcon(storedTheme === 'dark');
+    } else {
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+        updateThemeIcon(prefersDark);
+    }
+    
     if (themeToggle) {
         themeToggle.addEventListener('click', () => {
-            const isCurrentlyDark = document.documentElement.getAttribute('data-theme') === 'dark' ||
-                (!document.documentElement.hasAttribute('data-theme') && systemPrefersDark);
-
-            const newTheme = isCurrentlyDark ? 'light' : 'dark';
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
             document.documentElement.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
-            updateIcon(newTheme === 'dark');
+            updateThemeIcon(newTheme === 'dark');
         });
     }
-
-    // Smooth scrolling for navigation links
-    const navLinks = document.querySelectorAll('.nav-link');
-    navLinks.forEach(link => {
-        link.addEventListener('click', function (e) {
-            const href = this.getAttribute('href');
-            if (href.startsWith('#')) {
-                e.preventDefault();
-                const targetId = href;
-                const targetSection = document.querySelector(targetId);
-
-                if (targetSection) {
-                    const offsetTop = targetSection.offsetTop - 70;
-                    window.scrollTo({
-                        top: offsetTop,
-                        behavior: 'smooth'
-                    });
-                }
-            }
-        });
-    });
-
-    // Active navigation link highlighting
-    const sections = document.querySelectorAll('section[id]');
-    function updateActiveNavLink() {
-        let current = '';
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            if (window.scrollY >= (sectionTop - 200)) {
-                current = section.getAttribute('id');
-            }
-        });
-
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === `#${current}`) {
-                link.classList.add('active');
-            }
-        });
-    }
-
-    let ticking = false;
-    window.addEventListener('scroll', () => {
-        if (!ticking) {
-            window.requestAnimationFrame(() => {
-                updateActiveNavLink();
-                ticking = false;
-            });
-            ticking = true;
+    
+    function updateThemeIcon(isDark) {
+        if (!themeToggle) return;
+        const icon = themeToggle.querySelector('i');
+        if (icon) {
+            icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
         }
-    });
-
-    // --- Hero Parallax Effect ---
-    const hero = document.querySelector('.hero');
-    const heroBg = document.querySelector('.hero-background');
-    const heroContent = document.querySelector('.hero-content');
-
-    if (heroBg && hero) {
-        hero.addEventListener('mousemove', (e) => {
-            const x = (e.clientX / window.innerWidth - 0.5) * 20;
-            const y = (e.clientY / window.innerHeight - 0.5) * 20;
-            window.requestAnimationFrame(() => {
-                heroBg.style.transform = `translate(${-x}px, ${-y}px) scale(1.05)`;
-            });
-        });
-
-        hero.addEventListener('mouseleave', () => {
-            window.requestAnimationFrame(() => {
-                heroBg.style.transform = `translate(0px, 0px) scale(1)`;
-            });
-        });
-
-        window.addEventListener('scroll', () => {
-            const scrolled = window.scrollY;
-            if (scrolled < window.innerHeight) {
-                heroContent.style.transform = `translateY(${scrolled * 0.2}px)`;
-                heroContent.style.opacity = 1 - (scrolled / 700);
-            }
-        });
     }
 
-    // --- Contact Form Handling ---
-    const contactForm = document.getElementById('contact-form');
-    const formSuccess = document.getElementById('form-success');
-
-    if (contactForm) {
-        contactForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            const nameInput = document.getElementById('name');
-            const emailInput = document.getElementById('email');
-            const messageInput = document.getElementById('message');
-
-            const submitButton = contactForm.querySelector('.submit-button');
-            const buttonText = submitButton.querySelector('.button-text');
-            const buttonLoading = submitButton.querySelector('.button-loading');
-
-            const name = nameInput.value.trim();
-            const email = emailInput.value.trim();
-            const message = messageInput.value.trim();
-
-            if (!name || !email || !message) return;
-
-            // Show loading state
-            if (buttonText) buttonText.style.display = 'none';
-            if (buttonLoading) buttonLoading.style.display = 'inline-block';
-            submitButton.disabled = true;
-
-            const scriptURL = "https://formsubmit.co/ajax/ar.uttara52a@gmail.com";
-
-            fetch(scriptURL, {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({
-                    name: name,
-                    email: email,
-                    message: message,
-                    _subject: `New Lead: ${name} via US Architects Website`,
-                    _template: "table"
-                })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success === "true" || data.success === true) {
-                        contactForm.style.display = 'none';
-                        if (formSuccess) {
-                            formSuccess.style.display = 'block';
-                            formSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        }
-                    } else {
-                        throw new Error("Submission failed");
-                    }
-                })
-                .catch(err => {
-                    console.error("Form error:", err);
-                    alert("Sorry, there was an error sending your message. Please try again or call us directly.");
-                })
-                .finally(() => {
-                    if (buttonText) buttonText.style.display = 'inline-block';
-                    if (buttonLoading) buttonLoading.style.display = 'none';
-                    submitButton.disabled = false;
-                });
-        });
-    }
-
-    // --- Navbar Scroll Effect ---
-    const navbar = document.getElementById('navbar');
-    if (navbar) {
-        window.addEventListener('scroll', function () {
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-    }
-
-    // --- Mobile Menu Toggle ---
-    const hamburger = document.getElementById('hamburger');
-    const navMenu = document.getElementById('nav-menu');
-
-    if (hamburger && navMenu) {
-        hamburger.addEventListener('click', function () {
-            navMenu.classList.toggle('active');
-            hamburger.classList.toggle('active');
-        });
-
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', () => {
-                navMenu.classList.remove('active');
-                hamburger.classList.remove('active');
-            });
-        });
-    }
-
-    // --- 3D Scroll Animations ---
-    const scrollObserverOptions = {
-        threshold: 0.15
+    // Scroll Observer for Animations
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
     };
-    const scrollObserver = new IntersectionObserver((entries, observer) => {
+
+    const observer = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('in-view');
-                observer.unobserve(entry.target);
             }
         });
-    }, scrollObserverOptions);
+    }, observerOptions);
 
-    document.querySelectorAll('.animate-3d').forEach(el => scrollObserver.observe(el));
+    const animatedElements = document.querySelectorAll('.animate-3d');
+    animatedElements.forEach(el => observer.observe(el));
 
-    // --- Seamless Gallery Initialization ---
-    initializeSeamlessGallery();
-
-    // --- 3D Tilt Initialization ---
+    // Initialize the Category Gallery Reveal
+    initializeCategoryGallery();
+    
+    // Initialize 3D Image interactions if available
     if (typeof VanillaTilt !== 'undefined') {
-        VanillaTilt.init(document.querySelectorAll(".about-intro, .about-philosophy, .about-vision, .contact-form-container"), {
+        VanillaTilt.init(document.querySelectorAll(".about-image-wrapper"), {
             max: 5,
             speed: 400,
             glare: true,
-            "max-glare": 0.15,
+            "max-glare": 0.2,
+            perspective: 1000,
             scale: 1.02
         });
 
@@ -250,207 +90,215 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-function initializeSeamlessGallery() {
-    setupTrack('gallery-track-interior', 18, 'Interior portfolio_page_', 'Interior Design');
-    setupTrack('gallery-track-visualization', 15, '3D Visualization_page_', '3D Visualization');
+// --- Categorized Gallery Reveal Logic ---
+const projectCategories = [
+    {
+        id: 'residential',
+        title: 'Residential Architecture',
+        description: 'Bespoke independent houses, premium villas, and modern living spaces designed for comfort and elegance.',
+        coverImage: './assets/images/projects/3D Visualization_page_2.png',
+        images: [
+            { src: './assets/images/projects/3D Visualization_page_1.png', caption: 'A modern multi-story apartment featuring biophilic balconies and timber accents.' },
+            { src: './assets/images/projects/3D Visualization_page_2.png', caption: 'Luxury premium corner villa with an expansive wrap-around garden and double-height entry.' },
+            { src: './assets/images/projects/3D Visualization_page_3.png', caption: 'Contemporary bungalow leveraging natural stone facades to integrate seamlessly with the landscape.' },
+            { src: './assets/images/projects/3D Visualization_page_4.png', caption: 'Minimalist twin-house architecture utilizing bold orthogonal concrete forms.' },
+            { src: './assets/images/projects/3D Visualization_page_5.png', caption: 'Urban row housing designed for high-density elegance while maximizing natural light.' },
+            { src: './assets/images/projects/3D Visualization_page_6.png', caption: 'A striking elevated residential unit featuring automated sun-shading louvers.' }
+        ]
+    },
+    {
+        id: 'commercial',
+        title: 'Commercial Complexes',
+        description: 'Dynamic commercial buildings combining retail, office spaces, and high-visibility street presence.',
+        coverImage: './assets/images/projects/3D Visualization_page_7.png',
+        images: [
+            { src: './assets/images/projects/3D Visualization_page_7.png', caption: 'State-of-the-art corporate headquarters featuring an energy-efficient glass curtain wall.' },
+            { src: './assets/images/projects/3D Visualization_page_8.png', caption: 'Mixed-use complex integrating premium retail storefronts on the ground floor with vibrant office suites above.' },
+            { src: './assets/images/projects/3D Visualization_page_9.png', caption: 'A bustling multi-level shopping arcade designed to maximize foot traffic and brand visibility.' },
+            { src: './assets/images/projects/3D Visualization_page_10.png', caption: 'Boutique architectural office building emphasizing brutalist aesthetics and exposed structural elements.' },
+            { src: './assets/images/projects/3D Visualization_page_11.png', caption: 'Modern hospitality facade seamlessly blending guest privacy with expansive urban views.' }
+        ]
+    },
+    {
+        id: 'interior',
+        title: 'Interior Design',
+        description: 'Intricately planned interior spaces, emphasizing material palettes, custom lighting, and functional luxury.',
+        coverImage: './assets/images/projects/Interior portfolio_page_1.png',
+        images: [
+            { src: './assets/images/projects/Interior portfolio_page_1.png', caption: 'A warm, inviting living space characterized by neutral tones, soft ambient lighting, and elegant bespoke minimalist furniture.' },
+            { src: './assets/images/projects/Interior portfolio_page_2.png', caption: 'Luxury master bedroom featuring custom wood paneling and a seamless transition to the ensuite.' },
+            { src: './assets/images/projects/Interior portfolio_page_3.png', caption: 'An ergonomic home office utilizing natural daylight and floating shelves to maximize spatial efficiency.' },
+            { src: './assets/images/projects/Interior portfolio_page_4.png', caption: 'Sleek, modern kitchen with integrated premium appliances, matte black cabinetry, and a monolithic geometric island.' },
+            { src: './assets/images/projects/Interior portfolio_page_5.png', caption: 'A tranquil dining area set beneath a statement chandelier, surrounded by biophilic interior accents.' },
+            { src: './assets/images/projects/Interior portfolio_page_6.png', caption: 'High-end corporate boardroom designed for acoustic perfection, natural lighting, and executive comfort.' },
+            { src: './assets/images/projects/Interior portfolio_page_7.png', caption: 'A boutique retail interior maximizing product display through strategic accent lighting and mirrored spatial surfaces.' },
+            { src: './assets/images/projects/Interior portfolio_page_8.png', caption: 'Spa-inspired primary bathroom swathed in premium marble with dual vanity luxury fixtures.' }
+        ]
+    },
+    {
+        id: 'visualization',
+        title: '3D Visualization',
+        description: 'Photorealistic architectural renders, site planning, and spatial visualization for pre-construction clarity.',
+        coverImage: './assets/images/projects/3D Visualization_page_12.png',
+        images: [
+            { src: './assets/images/projects/3D Visualization_page_12.png', caption: 'Photorealistic aerial perspective showcasing the relationship between the proposed structure and the surrounding urban grid.' },
+            { src: './assets/images/projects/3D Visualization_page_13.png', caption: 'Detailed twilight render highlighting exterior landscape atmospheric lighting and interior depth.' },
+            { src: './assets/images/projects/3D Visualization_page_14.png', caption: 'Close-up material study render emphasizing the texture of the exposed concrete and warm residential timber finishes.' },
+            { src: './assets/images/projects/3D Visualization_page_15.png', caption: 'Dynamic "Golden Hour" visualization bringing the architectural massing and volumetric shadows to life before construction begins.' }
+        ]
+    }
+];
 
-    function setupTrack(trackId, pageCount, prefix, altPrefix) {
-        const track = document.getElementById(trackId);
-        if (!track) return;
-        const container = track.closest('.gallery-container');
-        if (!container) return;
+function initializeCategoryGallery() {
+    const categoryGrid = document.getElementById('category-grid');
+    const categoryReveal = document.getElementById('category-reveal');
+    const revealGallery = document.getElementById('reveal-gallery');
+    const revealTitle = document.getElementById('reveal-title');
+    const revealDescription = document.getElementById('reveal-description');
+    const backBtn = document.getElementById('back-to-categories');
+    
+    // Lightbox Elements
+    const lightbox = document.getElementById('image-lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxCaption = document.getElementById('lightbox-caption');
+    const lightboxPrev = document.querySelector('.lightbox-prev');
+    const lightboxNext = document.querySelector('.lightbox-next');
+    
+    let currentLightboxImages = [];
+    let currentImageIndex = 0;
 
-        let initialHTML = '';
-        for (let i = 1; i <= pageCount; i++) {
-            initialHTML += `
-                <div class="gallery-item">
-                    <img src="./assets/images/projects/${prefix}${i}.png" alt="${altPrefix} ${i}" loading="lazy">
+    if (!categoryGrid || !categoryReveal) return;
+
+    // 1. Render Category Cover Cards
+    projectCategories.forEach(category => {
+        const card = document.createElement('div');
+        card.className = 'category-card';
+        card.innerHTML = `
+            <div class="category-image">
+                <img src="${category.coverImage}" alt="${category.title}" loading="lazy">
+                <div class="category-overlay">
+                    <span class="view-text">View Gallery</span>
                 </div>
+            </div>
+            <div class="category-info">
+                <h3>${category.title}</h3>
+            </div>
+        `;
+        
+        card.addEventListener('click', () => openCategory(category));
+        categoryGrid.appendChild(card);
+    });
+
+    // 2. Handle Reveal Navigation
+    function openCategory(category) {
+        // Populate Reveal Content
+        if(revealTitle) revealTitle.textContent = category.title;
+        if(revealDescription) revealDescription.textContent = category.description;
+        
+        // Populate Images Grid
+        revealGallery.innerHTML = '';
+        currentLightboxImages = category.images; // Set global array for lightbox to consume
+        
+        category.images.forEach((imgData, index) => {
+            const item = document.createElement('div');
+            item.className = 'gallery-item reveal-item';
+            
+            // Add image and description caption
+            item.innerHTML = `
+                <img src="${imgData.src}" alt="${imgData.caption}" loading="lazy">
+                <div class="reveal-item-caption">${imgData.caption}</div>
             `;
-        }
-        track.innerHTML = initialHTML;
-
-        // Clone for infinite scroll
-        const originalItems = Array.from(track.querySelectorAll('.gallery-item'));
-        originalItems.forEach(item => {
-            track.insertBefore(item.cloneNode(true), track.firstChild);
-            track.appendChild(item.cloneNode(true));
+            
+            // Attach lightbox click
+            item.addEventListener('click', () => openLightbox(index));
+            revealGallery.appendChild(item);
         });
 
-        const allItems = Array.from(track.querySelectorAll('.gallery-item'));
-        const itemWidth = 220; // Adjusted for better control
-        const totalOriginalWidth = pageCount * itemWidth;
-        container.scrollLeft = totalOriginalWidth;
+        // Animate out category grid
+        categoryGrid.classList.add('fade-out');
+        setTimeout(() => {
+            categoryGrid.style.display = 'none';
+            categoryReveal.style.display = 'block';
+            
+            // Trigger reflow
+            void categoryReveal.offsetWidth; 
+            
+            // Animate in reveal view
+            categoryReveal.classList.add('active');
+        }, 300); // 300ms CSS transition
+    }
 
-        let isPaused = false;
-        let isDown = false;
-        let startX, scrollLeft;
-        const autoScrollSpeed = 0.5;
-
-        function updateGallery() {
-            if (!isPaused && !isDown) {
-                container.scrollLeft += autoScrollSpeed;
-            }
-
-            if (container.scrollLeft <= 0) {
-                container.scrollLeft = totalOriginalWidth;
-            } else if (container.scrollLeft >= totalOriginalWidth * 2) {
-                container.scrollLeft = totalOriginalWidth;
-            }
-
-            const containerRect = container.getBoundingClientRect();
-            const containerCenter = containerRect.left + containerRect.width / 2;
-
-            allItems.forEach(item => {
-                const rect = item.getBoundingClientRect();
-                const itemCenter = rect.left + rect.width / 2;
-                const distance = Math.abs(itemCenter - containerCenter);
-                let scale = 1 - (distance / (containerRect.width / 1.5)) * 0.15;
-                item.style.transform = `scale(${Math.max(0.85, Math.min(1, scale))})`;
-            });
-            requestAnimationFrame(updateGallery);
-        }
-        requestAnimationFrame(updateGallery);
-
-        container.addEventListener('mouseenter', () => isPaused = true);
-        container.addEventListener('mouseleave', () => isPaused = false);
-        container.addEventListener('mousedown', (e) => {
-            isDown = true;
-            startX = e.pageX - container.offsetLeft;
-            scrollLeft = container.scrollLeft;
+    if (backBtn) {
+        backBtn.addEventListener('click', () => {
+            // Animate out reveal view
+            categoryReveal.classList.remove('active');
+            setTimeout(() => {
+                categoryReveal.style.display = 'none';
+                categoryGrid.style.display = 'grid'; // CSS grid
+                
+                // Trigger reflow
+                void categoryGrid.offsetWidth;
+                
+                // Animate in category grid
+                categoryGrid.classList.remove('fade-out');
+            }, 300);
         });
-        window.addEventListener('mouseup', () => isDown = false);
-        container.addEventListener('mousemove', (e) => {
-            if (!isDown) return;
-            e.preventDefault();
-            const x = e.pageX - container.offsetLeft;
-            const walk = (x - startX) * 2;
-            container.scrollLeft = scrollLeft - walk;
+    }
+
+    // --- 3. Lightbox Engine ---
+    function openLightbox(index) {
+        if (!lightbox || !lightboxImg) return;
+        currentImageIndex = index;
+        updateLightboxImage();
+        lightbox.style.display = 'flex';
+        setTimeout(() => lightbox.classList.add('active'), 10);
+        document.body.style.overflow = 'hidden';
+    }
+
+    function updateLightboxImage() {
+        if (currentLightboxImages.length === 0) return;
+        
+        // Loop bounds
+        if (currentImageIndex < 0) currentImageIndex = currentLightboxImages.length - 1;
+        else if (currentImageIndex >= currentLightboxImages.length) currentImageIndex = 0;
+        
+        const file = currentLightboxImages[currentImageIndex];
+        lightboxImg.src = file.src;
+        if (lightboxCaption) lightboxCaption.textContent = file.caption;
+    }
+
+    function closeLightbox() {
+        if (!lightbox) return;
+        lightbox.classList.remove('active');
+        setTimeout(() => lightbox.style.display = 'none', 400);
+        document.body.style.overflow = 'auto'; // allow page scroll
+    }
+
+    if (lightbox) {
+        document.querySelector('.lightbox-close')?.addEventListener('click', closeLightbox);
+        
+        lightbox.addEventListener('click', e => { 
+            if (e.target === lightbox) closeLightbox(); 
         });
-
-        // Lightbox Global State
-        const lightbox = document.getElementById('image-lightbox');
-        const lightboxImg = document.getElementById('lightbox-img');
-        const lightboxCaption = document.getElementById('lightbox-caption');
-        const prevBtn = document.querySelector('.lightbox-prev');
-        const nextBtn = document.querySelector('.lightbox-next');
-
-        let currentLightboxImages = [];
-        let currentImageIndex = 0;
-
-        // Build the global image list from original items only (not clones)
-        function buildInitialGalleryArrays() {
-            const interiorItems = Array.from(document.querySelectorAll('#gallery-track-interior .gallery-item:not(.clone) img'));
-            const vizItems = Array.from(document.querySelectorAll('#gallery-track-visualization .gallery-item:not(.clone) img'));
-            // Fallback if clone class wasn't strictly added
-            if (interiorItems.length === 0) {
-                return Array.from(document.querySelectorAll('.gallery-item img'));
-            }
-            return [...interiorItems, ...vizItems];
-        }
-
-        // Fallback: Populate list of all images if tracking globally
-        currentLightboxImages = Array.from(document.querySelectorAll('.gallery-item img'));
-
-        // Function to update the lightbox content based on index
-        function updateLightboxImage(index) {
-            if (!currentLightboxImages.length || !lightboxImg) return;
-
-            // Handle looping
-            if (index < 0) {
-                currentImageIndex = currentLightboxImages.length - 1;
-            } else if (index >= currentLightboxImages.length) {
-                currentImageIndex = 0;
-            } else {
-                currentImageIndex = index;
-            }
-
-            const newImg = currentLightboxImages[currentImageIndex];
-            lightboxImg.src = newImg.src;
-            if (lightboxCaption) {
-                lightboxCaption.textContent = newImg.alt;
-            }
-        }
-
-        // Attach click events to ALL gallery items (including clones) to open lightbox
-        const allGalleryItems = document.querySelectorAll('.gallery-item');
-        allGalleryItems.forEach(item => {
-            item.addEventListener('click', (e) => {
-                const clickedImg = item.querySelector('img');
-                if (!clickedImg || !lightbox || !lightboxImg) return;
-
-                // Re-build fresh array of all currently visible original images (deduplication)
-                // A simple way to get unique images by src
-                const allImgs = Array.from(document.querySelectorAll('.gallery-item img'));
-                const uniqueImgs = [];
-                const seenSrcs = new Set();
-                for (let img of allImgs) {
-                    if (!seenSrcs.has(img.src)) {
-                        uniqueImgs.push(img);
-                        seenSrcs.add(img.src);
-                    }
-                }
-                currentLightboxImages = uniqueImgs;
-
-                // Find the index of the clicked image
-                currentImageIndex = currentLightboxImages.findIndex(img => img.src === clickedImg.src);
-                if (currentImageIndex === -1) currentImageIndex = 0; // Fallback
-
-                updateLightboxImage(currentImageIndex);
-
-                lightbox.style.display = 'flex';
-                setTimeout(() => lightbox.classList.add('active'), 10);
-                document.body.style.overflow = 'hidden';
-            });
+        
+        if (lightboxPrev) lightboxPrev.addEventListener('click', e => { 
+            e.stopPropagation(); 
+            currentImageIndex--; 
+            updateLightboxImage(); 
         });
-
-        if (lightbox) {
-            const closeLightbox = () => {
-                lightbox.classList.remove('active');
-                setTimeout(() => lightbox.style.display = 'none', 400);
-                document.body.style.overflow = 'auto';
-            };
-
-            // Close on X click
-            document.querySelector('.lightbox-close')?.addEventListener('click', closeLightbox);
-
-            // Close on background click (but not on image or arrows)
-            lightbox.addEventListener('click', (e) => {
-                if (e.target === lightbox) {
-                    closeLightbox();
-                }
-            });
-
-            // Next/Prev Button Event Listeners
-            if (prevBtn) {
-                prevBtn.addEventListener('click', (e) => {
-                    e.stopPropagation(); // Prevent closing lightbox
-                    updateLightboxImage(currentImageIndex - 1);
-                });
+        
+        if (lightboxNext) lightboxNext.addEventListener('click', e => { 
+            e.stopPropagation(); 
+            currentImageIndex++; 
+            updateLightboxImage(); 
+        });
+        
+        document.addEventListener('keydown', e => {
+            if (lightbox.classList.contains('active')) {
+                if (e.key === 'Escape') closeLightbox();
+                else if (e.key === 'ArrowLeft') { currentImageIndex--; updateLightboxImage(); }
+                else if (e.key === 'ArrowRight') { currentImageIndex++; updateLightboxImage(); }
             }
-
-            if (nextBtn) {
-                nextBtn.addEventListener('click', (e) => {
-                    e.stopPropagation(); // Prevent closing lightbox
-                    updateLightboxImage(currentImageIndex + 1);
-                });
-            }
-
-            // Keyboard Navigation (Left, Right, Escape)
-            document.addEventListener('keydown', (e) => {
-                if (lightbox.classList.contains('active')) {
-                    if (e.key === 'Escape') {
-                        closeLightbox();
-                    } else if (e.key === 'ArrowLeft') {
-                        updateLightboxImage(currentImageIndex - 1);
-                    } else if (e.key === 'ArrowRight') {
-                        updateLightboxImage(currentImageIndex + 1);
-                    }
-                }
-            });
-        }
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeLightbox();
         });
     }
 }

@@ -10,7 +10,7 @@
     <meta name="keywords"
         content="US Architects, architecture Pune, residential architects, commercial design, interior design India, landscape architecture, architectural excellence">
     <meta name="author" content="Rushikesh Pattiwar">
-    <meta name="developer" content="Rushikesh Pattiwar">
+    <meta name="developer" content="pattiwarrushikesh5102@gmail.com">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,7 +34,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- CSS -->
-    <link rel="stylesheet" href="./assets/css/style.css?v=3">
+    <link rel="stylesheet" href="./assets/css/style.css?v=6">
 
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
@@ -71,6 +71,7 @@
       "@type": "Person",
       "name": "Rushikesh Pattiwar",
       "jobTitle": "Developer",
+      "email": "pattiwarrushikesh5102@gmail.com",
       "description": "Full-stack and technology developer involved in building this website."
     }
     </script>
@@ -172,24 +173,23 @@
 
 
         </div>
-        <!-- Interior Portfolio Row -->
-        <h3 class="portfolio-row-title">Interior Portfolio</h3>
-        <div class="gallery-container" id="interior-gallery" role="region" aria-label="Interior Design Portfolio">
-            <div class="gallery-track" id="gallery-track-interior" aria-live="polite">
-                <!-- Data injected via JS -->
-            </div>
+        <!-- Dynamic Category Grid -->
+        <div id="category-grid" class="category-grid animate-3d">
+            <!-- Category cards injected via JS -->
         </div>
 
-        <!-- 3D Visualization Portfolio Row -->
-        <h3 class="portfolio-row-title">3D Visualization Portfolio</h3>
-        <div class="gallery-container" id="visualization-gallery" role="region" aria-label="3D Visualization Portfolio">
-            <div class="gallery-track" id="gallery-track-visualization" aria-live="polite">
-                <!-- Data injected via JS -->
+        <!-- Category Reveal View (Hidden by default) -->
+        <div id="category-reveal" class="category-reveal" style="display: none;">
+            <div class="reveal-header">
+                <button id="back-to-categories" class="back-button">&#8592; Back to Categories</button>
+                <div class="reveal-title-container">
+                    <h3 id="reveal-title" class="reveal-title">Category Title</h3>
+                    <p id="reveal-description" class="reveal-description">Detailed description here.</p>
+                </div>
             </div>
-        </div>
-
-        <div class="scroll-wrapper-hint">
-            <span>&#8592; Drag or scroll horizontally to explore &#8594;</span>
+            <div id="reveal-gallery" class="reveal-gallery">
+                <!-- Images for the active category injected via JS -->
+            </div>
         </div>
     </section>
 
@@ -214,6 +214,11 @@
                             <label for="email">Email *</label>
                             <input type="email" id="email" name="email" required>
                             <span class="error-message" id="email-error"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                            <span class="error-message" id="phone-error"></span>
                         </div>
                         <div class="form-group">
                             <label for="message">Message *</label>
@@ -257,7 +262,9 @@
                             <div class="contact-icon">✉️</div>
                             <div class="contact-text">
                                 <h4>Email</h4>
-                                <p><a href="mailto:ar.uttara52a@gmail.com">ar.uttara52a@gmail.com</a></p>
+                                <p><a
+                                        href="mailto:usarchitects.interiors@gmail.com">usarchitects.interiors@gmail.com</a>
+                                </p>
                             </div>
                         </div>
                         <div class="contact-item">
@@ -307,10 +314,10 @@
                 <div class="footer-section">
                     <h4>Services</h4>
                     <ul class="footer-links">
-                        <li><a href="#projects">Architecture Design</a></li>
+                        <li><a href="#projects">Residential Architecture</a></li>
+                        <li><a href="#projects">Commercial Complexes</a></li>
                         <li><a href="#projects">Interior Design</a></li>
                         <li><a href="#projects">3D Visualization</a></li>
-                        <li><a href="#projects">Landscape Design</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -321,7 +328,7 @@
                                 Sarathi Swapna Phase 2, Chintamani Paradise
                                 Paud Rd, Pune, Maharashtra 411038, India</a></p>
                         <p>📞 <a href="tel:+919923152564">+91 9923152564</a></p>
-                        <p>✉️ <a href="mailto:ar.uttara52a@gmail.com">ar.uttara52a@gmail.com</a></p>
+                        <p>✉️ <a href="mailto:usarchitects.interiors@gmail.com">usarchitects.interiors@gmail.com</a></p>
                     </div>
                 </div>
             </div>
