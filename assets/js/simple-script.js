@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     closeMenuOnLinkClick();
 
     // Theme Toggle Logic
-    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggle = document.getElementById('themeToggle');
     const storedTheme = localStorage.getItem('theme');
     
     if (storedTheme) {
