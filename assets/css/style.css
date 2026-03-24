@@ -21,9 +21,9 @@
     --text-white: #ffffff;
 
     /* Background Colors - Soft Architectural */
-    --bg-primary: #ffffff;
-    --bg-secondary: #f9fafb;
-    --bg-tertiary: #f3f4f6;
+    --bg-primary: #fdfbf7;
+    --bg-secondary: #f5f2eb;
+    --bg-tertiary: #ece8df;
     --bg-dark: #111827;
     --bg-overlay: rgba(17, 24, 39, 0.85);
 
@@ -85,8 +85,8 @@
     --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     /* Dynamic Components */
-    --nav-bg: rgba(255, 255, 255, 0.8);
-    --nav-bg-scrolled: rgba(255, 255, 255, 0.95);
+    --nav-bg: rgba(253, 251, 247, 0.8);
+    --nav-bg-scrolled: rgba(253, 251, 247, 0.95);
     --nav-border: rgba(0, 0, 0, 0.1);
     --input-border: #e5e7eb;
 }
