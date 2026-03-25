@@ -355,34 +355,43 @@ function initializeContactForm() {
         btnText.style.display = 'none';
         btnLoading.style.display = 'inline-block';
         
-        // Step 3: Collect Form Data (ready for API)
-        const formData = new FormData(form);
+        // Step 3: Prepare JSON Payload for Google Apps Script
+        const payload = JSON.stringify({
+            name: name,
+            email: email,
+            phone: phone,
+            message: message
+        });
         
-        /* 
         // --- GOOGLE APPS SCRIPT INTEGRATION ---
-        // Uncomment and replace YOUR_SCRIPT_URL_HERE when you have your backend URL
-        const scriptURL = 'YOUR_SCRIPT_URL_HERE';
-        fetch(scriptURL, { method: 'POST', body: formData })
-            .then(response => {
-                showSuccess();
-            })
-            .catch(error => {
-                console.error('Error!', error.message);
-                resetButton();
-            });
-        */
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzNgdB_o2zpPOK5DUsiZgAvI_Yc0PgN_KPqzzSHmlzokwPy1TdVRpgkOfLyS--OnpA2xA/exec';
         
-        // --- MOCK API TIMEOUT (Temporary for UI Verification) ---
-        setTimeout(() => {
-            showSuccess();
-        }, 1500); // Wait 1.5 seconds to simulate sending
+        fetch(scriptURL, { 
+            method: 'POST', 
+            // text/plain avoids CORS preflight blocking on Google Scripts while allowing JSON parse backend
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: payload 
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showSuccess();
+            } else {
+                console.error('Google Script Error:', data.error);
+                alert("Sorry, there was an issue sending your message. Please try again.");
+                resetButton();
+            }
+        })
+        .catch(error => {
+            console.error('Fetch Error!', error.message);
+            alert("Sorry, there was a network issue. Please try again.");
+            resetButton();
+        });
         
         function showSuccess() {
             form.style.display = 'none'; // Hide the entire form
             successMessage.style.display = 'block'; // Show Confirmation Pop Up
             
-            // Note: The form remains hidden. If you wanted to show it again,
-            // you could set a timeout to revert it.
             resetButton();
             form.reset();
         }
