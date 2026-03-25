@@ -317,12 +317,45 @@ function initializeContactForm() {
         const btnText = form.querySelector('.button-text');
         const btnLoading = form.querySelector('.button-loading');
         
-        // Step 1: UI Loading State
+        // Step 1: Form Validation
+        const name = form.querySelector('#name').value.trim();
+        const email = form.querySelector('#email').value.trim();
+        const phone = form.querySelector('#phone').value.trim();
+        const message = form.querySelector('#message').value.trim();
+        
+        // Basic Regex patterns
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const phonePattern = /^[0-9]{10}$/; // Basic 10-digit validation
+        
+        form.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+        
+        let isValid = true;
+        
+        if (!name) {
+            document.getElementById('name-error').textContent = 'Name is required.';
+            isValid = false;
+        }
+        if (!email || !emailPattern.test(email)) {
+            document.getElementById('email-error').textContent = 'Please enter a valid email address.';
+            isValid = false;
+        }
+        if (!phone || !phonePattern.test(phone)) {
+            document.getElementById('phone-error').textContent = 'Please enter a valid 10-digit phone number.';
+            isValid = false;
+        }
+        if (!message) {
+            document.getElementById('message-error').textContent = 'Message cannot be empty.';
+            isValid = false;
+        }
+        
+        if (!isValid) return; // Stop if validation fails
+        
+        // Step 2: UI Loading State
         submitBtn.disabled = true;
         btnText.style.display = 'none';
         btnLoading.style.display = 'inline-block';
         
-        // Step 2: Collect Form Data (ready for API)
+        // Step 3: Collect Form Data (ready for API)
         const formData = new FormData(form);
         
         /* 
