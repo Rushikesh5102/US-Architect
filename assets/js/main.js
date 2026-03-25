@@ -117,9 +117,8 @@ const projectCategories = [
         id: 'interior',
         title: 'Interior Design',
         description: 'Intricately planned interior spaces, emphasizing material palettes, custom lighting, and functional luxury.',
-        coverImage: './assets/images/projects/Interior portfolio_page_1.png',
+        coverImage: './assets/images/projects/Interior portfolio_page_2.png',
         images: [
-            { src: './assets/images/projects/Interior portfolio_page_1.png', caption: 'A warm, inviting living space characterized by neutral tones, soft ambient lighting, and elegant bespoke minimalist furniture.' },
             { src: './assets/images/projects/Interior portfolio_page_2.png', caption: 'Luxury master bedroom featuring custom wood paneling and a seamless transition to the ensuite.' },
             { src: './assets/images/projects/Interior portfolio_page_3.png', caption: 'An ergonomic home office utilizing natural daylight and floating shelves to maximize spatial efficiency.' },
             { src: './assets/images/projects/Interior portfolio_page_4.png', caption: 'Sleek, modern kitchen with integrated premium appliances, matte black cabinetry, and a monolithic geometric island.' },
