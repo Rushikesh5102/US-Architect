@@ -302,3 +302,65 @@ function initializeCategoryGallery() {
         });
     }
 }
+
+// --- Contact Form Submission Logic ---
+function initializeContactForm() {
+    const form = document.getElementById('contact-form');
+    const successMessage = document.getElementById('form-success');
+    
+    if (!form || !successMessage) return;
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault(); // Stop default HTML GET submission and page reload
+        
+        const submitBtn = form.querySelector('.submit-button');
+        const btnText = form.querySelector('.button-text');
+        const btnLoading = form.querySelector('.button-loading');
+        
+        // Step 1: UI Loading State
+        submitBtn.disabled = true;
+        btnText.style.display = 'none';
+        btnLoading.style.display = 'inline-block';
+        
+        // Step 2: Collect Form Data (ready for API)
+        const formData = new FormData(form);
+        
+        /* 
+        // --- GOOGLE APPS SCRIPT INTEGRATION ---
+        // Uncomment and replace YOUR_SCRIPT_URL_HERE when you have your backend URL
+        const scriptURL = 'YOUR_SCRIPT_URL_HERE';
+        fetch(scriptURL, { method: 'POST', body: formData })
+            .then(response => {
+                showSuccess();
+            })
+            .catch(error => {
+                console.error('Error!', error.message);
+                resetButton();
+            });
+        */
+        
+        // --- MOCK API TIMEOUT (Temporary for UI Verification) ---
+        setTimeout(() => {
+            showSuccess();
+        }, 1500); // Wait 1.5 seconds to simulate sending
+        
+        function showSuccess() {
+            form.style.display = 'none'; // Hide the entire form
+            successMessage.style.display = 'block'; // Show Confirmation Pop Up
+            
+            // Note: The form remains hidden. If you wanted to show it again,
+            // you could set a timeout to revert it.
+            resetButton();
+            form.reset();
+        }
+        
+        function resetButton() {
+            submitBtn.disabled = false;
+            btnText.style.display = 'inline-block';
+            btnLoading.style.display = 'none';
+        }
+    });
+}
+
+// Attach listener cleanly
+document.addEventListener('DOMContentLoaded', initializeContactForm);
