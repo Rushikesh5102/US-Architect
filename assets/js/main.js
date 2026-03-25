@@ -98,10 +98,8 @@ const projectCategories = [
         description: 'Bespoke independent houses, premium villas, and modern living spaces designed for comfort and elegance.',
         coverImage: './assets/images/projects/3D Visualization_page_2.png',
         images: [
-            { src: './assets/images/projects/3D Visualization_page_1.png', caption: 'A modern multi-story apartment featuring biophilic balconies and timber accents.' },
             { src: './assets/images/projects/3D Visualization_page_2.png', caption: 'Luxury premium corner villa with an expansive wrap-around garden and double-height entry.' },
             { src: './assets/images/projects/3D Visualization_page_3.png', caption: 'Contemporary bungalow leveraging natural stone facades to integrate seamlessly with the landscape.' },
-            { src: './assets/images/projects/3D Visualization_page_4.png', caption: 'Minimalist twin-house architecture utilizing bold orthogonal concrete forms.' },
             { src: './assets/images/projects/3D Visualization_page_5.png', caption: 'Urban row housing designed for high-density elegance while maximizing natural light.' },
             { src: './assets/images/projects/3D Visualization_page_6.png', caption: 'A striking elevated residential unit featuring automated sun-shading louvers.' }
         ]
@@ -110,13 +108,9 @@ const projectCategories = [
         id: 'commercial',
         title: 'Commercial Complexes',
         description: 'Dynamic commercial buildings combining retail, office spaces, and high-visibility street presence.',
-        coverImage: './assets/images/projects/3D Visualization_page_7.png',
+        coverImage: './assets/images/projects/3D Visualization_page_4.png',
         images: [
-            { src: './assets/images/projects/3D Visualization_page_7.png', caption: 'State-of-the-art corporate headquarters featuring an energy-efficient glass curtain wall.' },
-            { src: './assets/images/projects/3D Visualization_page_8.png', caption: 'Mixed-use complex integrating premium retail storefronts on the ground floor with vibrant office suites above.' },
-            { src: './assets/images/projects/3D Visualization_page_9.png', caption: 'A bustling multi-level shopping arcade designed to maximize foot traffic and brand visibility.' },
-            { src: './assets/images/projects/3D Visualization_page_10.png', caption: 'Boutique architectural office building emphasizing brutalist aesthetics and exposed structural elements.' },
-            { src: './assets/images/projects/3D Visualization_page_11.png', caption: 'Modern hospitality facade seamlessly blending guest privacy with expansive urban views.' }
+            { src: './assets/images/projects/3D Visualization_page_4.png', caption: 'Dynamic commercial building combining retail and café spaces with high-visibility street presence.' }
         ]
     },
     {
