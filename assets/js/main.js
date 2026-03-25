@@ -127,12 +127,12 @@ const projectCategories = [
             { src: './assets/images/projects/Interior portfolio_page_6.png', caption: 'High-end corporate boardroom designed for acoustic perfection, natural lighting, and executive comfort.' },
             { src: './assets/images/projects/Interior portfolio_page_7.png', caption: 'A boutique retail interior maximizing product display through strategic accent lighting and mirrored spatial surfaces.' },
             { src: './assets/images/projects/Interior portfolio_page_8.png', caption: 'Spa-inspired primary bathroom swathed in premium marble with dual vanity luxury fixtures.' },
-            { src: './assets/images/projects/1.png', caption: 'Premium interior visualization detailing elegant spatial arrangement.' },
-            { src: './assets/images/projects/2.png', caption: 'Elegant architectural interior blending natural materials with modern forms.' },
-            { src: './assets/images/projects/3.png', caption: 'Sophisticated interior layout focusing on lighting and material harmony.' },
-            { src: './assets/images/projects/4.png', caption: 'Luxury bespoke interior visualization with integrated furnishings.' },
-            { src: './assets/images/projects/5.png', caption: 'Modern room design showcasing refined finishes and textures.' },
-            { src: './assets/images/projects/6.png', caption: 'Contemporary living space defined by natural light and structural minimalism.' }
+            { src: './assets/images/projects/1.png', caption: 'A warm, contemporary living space where soft lighting, refined textures, and natural tones come together in effortless harmony.' },
+            { src: './assets/images/projects/2.png', caption: 'A serene bedroom retreat where warm textures, soft lighting, and city views come together in perfect balance.' },
+            { src: './assets/images/projects/3.png', caption: 'Bedroom blending clean architectural lines with a soothing material palette, where warm wood tones frame the space.' },
+            { src: './assets/images/projects/4.png', caption: 'Spacious living room with modern finishes, elegant TV unit with functional storage, and separate mandir.' },
+            { src: './assets/images/projects/5.png', caption: 'Modular kitchen with functional storage, equipped with state-of-the-art appliances and smart solutions.' },
+            { src: './assets/images/projects/6.png', caption: 'Kids bedroom with optimized compact space, smart planning, and color palette designed for openness.' }
         ]
     },
     {

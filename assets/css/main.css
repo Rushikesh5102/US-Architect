@@ -1409,6 +1409,11 @@ html {
     width: 30px;
     height: 2px;
     background: var(--primary-color);
+    transition: width 0.3s ease-in-out;
+}
+
+.footer-section h4:hover::after {
+    width: 60px;
 }
 
 .footer-section p {
