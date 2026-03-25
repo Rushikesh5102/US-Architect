@@ -126,7 +126,13 @@ const projectCategories = [
             { src: './assets/images/projects/Interior portfolio_page_5.png', caption: 'A tranquil dining area set beneath a statement chandelier, surrounded by biophilic interior accents.' },
             { src: './assets/images/projects/Interior portfolio_page_6.png', caption: 'High-end corporate boardroom designed for acoustic perfection, natural lighting, and executive comfort.' },
             { src: './assets/images/projects/Interior portfolio_page_7.png', caption: 'A boutique retail interior maximizing product display through strategic accent lighting and mirrored spatial surfaces.' },
-            { src: './assets/images/projects/Interior portfolio_page_8.png', caption: 'Spa-inspired primary bathroom swathed in premium marble with dual vanity luxury fixtures.' }
+            { src: './assets/images/projects/Interior portfolio_page_8.png', caption: 'Spa-inspired primary bathroom swathed in premium marble with dual vanity luxury fixtures.' },
+            { src: './assets/images/projects/1.png', caption: 'Premium interior visualization detailing elegant spatial arrangement.' },
+            { src: './assets/images/projects/2.png', caption: 'Elegant architectural interior blending natural materials with modern forms.' },
+            { src: './assets/images/projects/3.png', caption: 'Sophisticated interior layout focusing on lighting and material harmony.' },
+            { src: './assets/images/projects/4.png', caption: 'Luxury bespoke interior visualization with integrated furnishings.' },
+            { src: './assets/images/projects/5.png', caption: 'Modern room design showcasing refined finishes and textures.' },
+            { src: './assets/images/projects/6.png', caption: 'Contemporary living space defined by natural light and structural minimalism.' }
         ]
     },
     {
