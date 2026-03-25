@@ -711,6 +711,11 @@ html {
     height: 3px;
     background: var(--primary-gradient);
     border-radius: 2px;
+    transition: width 0.4s ease-in-out;
+}
+
+.section-title:hover::after {
+    width: 120px;
 }
 
 .section-subtitle {
