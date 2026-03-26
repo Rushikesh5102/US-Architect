@@ -15,31 +15,77 @@
     <link rel="icon" type="image/x-icon" href="./assets/favicon/favicon.ico">
 
     <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- CSS -->
-    <link rel="stylesheet" href="./assets/css/style.css">
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Rushikesh Pattiwar",
-      "jobTitle": "Developer",
-      "email": "pattiwarrushikesh5102@gmail.com",
-      "description": "Full-stack and technology developer involved in building this website."
-    }
-    </script>
+    <link rel="stylesheet" href="./assets/css/main.css?v=1">
+
+    <style>
+        .privacy-page {
+            padding-top: 150px;
+            padding-bottom: 80px;
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+        }
+        .privacy-content {
+            background: var(--bg-secondary);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            max-width: 900px;
+            margin: 0 auto;
+            border: 1px solid var(--nav-border);
+        }
+        .privacy-section {
+            margin-bottom: 40px;
+        }
+        .privacy-section h2 {
+            font-size: 1.8rem;
+            color: var(--text-primary);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .privacy-section h3 {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+        .privacy-section p, .privacy-section li {
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        .privacy-section ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+            list-style-type: square;
+        }
+        .contact-info-privacy {
+            background: var(--bg-primary);
+            padding: 25px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border-left: 4px solid var(--primary-color);
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+    </style>
 </head>
 
 <body>
-    <!-- Navigation -->
+    <!-- Navigation (Matching index.html but with index.html refs) -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
-            <a href="index.html" class="nav-logo" aria-label="Go to Home">
+            <a href="index.html" class="nav-logo" aria-label="Refresh Page">
                 <img src="./assets/images/US_logo.jpeg" alt="US Architects Logo" class="logo-image">
                 <h2 class="logo-text">US Architects</h2>
             </a>
-            <ul class="nav-menu">
+            <ul class="nav-menu" id="nav-menu">
                 <li class="nav-item">
                     <a href="index.html" class="nav-link">Home</a>
                 </li>
@@ -49,26 +95,30 @@
                 <li class="nav-item">
                     <a href="index.html#projects" class="nav-link">Projects</a>
                 </li>
-
                 <li class="nav-item">
                     <a href="index.html#contact" class="nav-link">Contact</a>
                 </li>
             </ul>
+            <div class="hamburger" id="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
         </div>
     </nav>
 
     <!-- Privacy Policy Content -->
     <main class="privacy-page">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header animate-3d">
                 <h2 class="section-title">Privacy Policy</h2>
                 <p class="section-subtitle">Last updated: January 2025</p>
             </div>
 
-            <div class="privacy-content">
+            <div class="privacy-content animate-3d delay-1">
                 <section class="privacy-section">
                     <h2>Introduction</h2>
-                    <p>At Architecture Studio, we are committed to protecting your privacy and ensuring the security of
+                    <p>At US Architects, we are committed to protecting your privacy and ensuring the security of
                         your personal information. This Privacy Policy explains how we collect, use, and safeguard your
                         data when you visit our website or contact us through our contact form.</p>
                 </section>
@@ -80,6 +130,7 @@
                     <ul>
                         <li><strong>Name:</strong> Your full name as provided</li>
                         <li><strong>Email Address:</strong> Your email address for communication purposes</li>
+                        <li><strong>Phone Number:</strong> To contact you regarding your inquiry</li>
                         <li><strong>Message:</strong> The content of your inquiry or message</li>
                         <li><strong>Timestamp:</strong> The date and time when you submitted the form</li>
                     </ul>
@@ -89,109 +140,26 @@
                     <h2>How We Use Your Information</h2>
                     <p>We use the information collected through our contact form for the following purposes:</p>
                     <ul>
-                        <li>To respond to your inquiries and provide customer service</li>
-                        <li>To communicate with you about our architectural services</li>
-                        <li>To send you project updates and relevant information (only if you have requested it)</li>
-                        <li>To improve our services and website functionality</li>
+                        <li>To respond to your inquiries and provide architectural consultation</li>
+                        <li>To communicate with you about our design services</li>
+                        <li>To maintain internal records for project management</li>
                     </ul>
                 </section>
 
                 <section class="privacy-section">
                     <h2>Data Storage and Security</h2>
-                    <h3>Google Sheets Integration</h3>
-                    <p>Your contact form submissions are securely stored in Google Sheets using Google Apps Script. This
-                        data is:</p>
+                    <p>Your contact form submissions are securely stored using Google Apps Script integration. This data is:</p>
                     <ul>
-                        <li>Stored in a private Google Sheet accessible only to authorized personnel</li>
-                        <li>Protected by Google's security measures and encryption</li>
-                        <li>Used solely for communication and project management purposes</li>
+                        <li>Stored in a secure Google Sheet accessible only to authorized US Architects personnel</li>
+                        <li>Protected by Google's industry-leading security measures</li>
+                        <li>Used solely for responding to your construction or interior design inquiry</li>
                     </ul>
-
-                    <h3>Email Notifications</h3>
-                    <p>When you submit a contact form:</p>
-                    <ul>
-                        <li>You will receive an automatic acknowledgment email confirming receipt of your message</li>
-                        <li>Our team will be notified of your inquiry to ensure prompt response</li>
-                        <li>Your email address will be used only for responding to your specific inquiry</li>
-                    </ul>
-                </section>
-
-                <section class="privacy-section">
-                    <h2>Information Sharing</h2>
-                    <p>We do not sell, trade, or otherwise transfer your personal information to third parties without
-                        your consent, except in the following circumstances:</p>
-                    <ul>
-                        <li>When required by law or legal process</li>
-                        <li>To protect our rights, property, or safety</li>
-                        <li>With trusted service providers who assist us in operating our website and conducting our
-                            business (these parties are bound by confidentiality agreements)</li>
-                    </ul>
-                </section>
-
-                <section class="privacy-section">
-                    <h2>Data Retention</h2>
-                    <p>We retain your contact form information for as long as necessary to:</p>
-                    <ul>
-                        <li>Respond to your inquiry and provide ongoing service</li>
-                        <li>Maintain records for business purposes</li>
-                        <li>Comply with legal obligations</li>
-                    </ul>
-                    <p>You may request the deletion of your personal information at any time by contacting us directly.
-                    </p>
-                </section>
-
-                <section class="privacy-section">
-                    <h2>Your Rights</h2>
-                    <p>You have the right to:</p>
-                    <ul>
-                        <li>Access the personal information we have about you</li>
-                        <li>Request correction of inaccurate or incomplete information</li>
-                        <li>Request deletion of your personal information</li>
-                        <li>Opt-out of future communications from us</li>
-                        <li>Withdraw consent for data processing at any time</li>
-                    </ul>
-                </section>
-
-                <section class="privacy-section">
-                    <h2>Cookies and Tracking</h2>
-                    <p>Our website may use cookies and similar tracking technologies to:</p>
-                    <ul>
-                        <li>Improve website functionality and user experience</li>
-                        <li>Analyze website traffic and usage patterns (Google Analytics)</li>
-                        <li>Remember your preferences and settings</li>
-                    </ul>
-                    <p>You can control cookie settings through your browser preferences.</p>
-                </section>
-
-                <section class="privacy-section">
-                    <h2>Third-Party Services</h2>
-                    <p>Our website may integrate with third-party services including:</p>
-                    <ul>
-                        <li><strong>Google Analytics:</strong> For website traffic analysis</li>
-                        <li><strong>Google Maps:</strong> For location display</li>
-                        <li><strong>Google Apps Script:</strong> For contact form processing</li>
-                    </ul>
-                    <p>These services have their own privacy policies, and we encourage you to review them.</p>
-                </section>
-
-                <section class="privacy-section">
-                    <h2>Children's Privacy</h2>
-                    <p>Our services are not directed to children under 13 years of age. We do not knowingly collect
-                        personal information from children under 13. If we become aware that we have collected personal
-                        information from a child under 13, we will take steps to delete such information.</p>
-                </section>
-
-                <section class="privacy-section">
-                    <h2>Changes to This Privacy Policy</h2>
-                    <p>We may update this Privacy Policy from time to time. We will notify you of any changes by posting
-                        the new Privacy Policy on this page and updating the "Last updated" date. We encourage you to
-                        review this Privacy Policy periodically for any changes.</p>
                 </section>
 
                 <section class="privacy-section">
                     <h2>Contact Us</h2>
                     <p>If you have any questions about this Privacy Policy or our data practices, please contact us:</p>
-                    <div class="contact-info">
+                    <div class="contact-info-privacy">
                         <p><strong>US Architects</strong></p>
                         <p>📧 Email: usarchitects.interiors@gmail.com</p>
                         <p>📞 Phone: +91 9923152564</p>
@@ -208,9 +176,9 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>Architecture Studio</h3>
-                    <p>Creating innovative architectural solutions that blend functionality with aesthetic excellence.
-                    </p>
+                    <h3>US Architects</h3>
+                    <p>Transforming visions into definitive spatial experiences. We design environments that blend
+                        structural integrity with timeless aesthetic.</p>
                 </div>
                 <div class="footer-section">
                     <h4>Quick Links</h4>
@@ -218,17 +186,28 @@
                         <li><a href="index.html">Home</a></li>
                         <li><a href="index.html#about">About</a></li>
                         <li><a href="index.html#projects">Projects</a></li>
-
                         <li><a href="index.html#contact">Contact</a></li>
                         <li><a href="privacy.html">Privacy Policy</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html#projects">Residential Architecture</a></li>
+                        <li><a href="index.html#projects">Commercial Complexes</a></li>
+                        <li><a href="index.html#projects">Interior Design</a></li>
+                        <li><a href="index.html#projects">3D Visualization</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
                     <h4>Contact Info</h4>
                     <div class="footer-contact">
-                        <p>📍A-3 Indrayani society, DP Road Kothrud, Pune District, India</p>
-                        <p>📞+91 9923152564</p>
-                        <p>✉️ usarchitects.interiors@gmail.com</p>
+                        <p>📍 <a href="https://www.google.com/maps/place/US+Architects+(Pune)/@18.5074,73.8077,15z"
+                                target="_blank" rel="noopener noreferrer">GQ3W+9MX Indrayani Society, Shastri Nagar Rd
+                                Sarathi Swapna Phase 2, Chintamani Paradise
+                                Paud Rd, Pune, Maharashtra 411038, India</a></p>
+                        <p>📞 <a href="tel:+919923152564">+91 9923152564</a></p>
+                        <p>✉️ <a href="mailto:usarchitects.interiors@gmail.com">usarchitects.interiors@gmail.com</a></p>
                     </div>
                 </div>
             </div>
@@ -237,7 +216,10 @@
             </div>
         </div>
     </footer>
-    <script src="./assets/js/simple-script.js"></script>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+    <script src="./assets/js/main.js?v=2"></script>
 </body>
 
 </html>

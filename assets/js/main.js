@@ -1,21 +1,44 @@
-// Function to close menu on mobile when a link is clicked
-function closeMenuOnLinkClick() {
-    const defaultCheckbox = document.getElementById('check');
-    const links = document.querySelectorAll('nav ul li a');
+// Function to handle responsive hamburger menu
+function initHamburgerMenu() {
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
 
-    if (defaultCheckbox) {
-        links.forEach(link => {
+    if (hamburger && navMenu) {
+        // Toggle menu open/close when clicking the hamburger icon
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close menu automatically whenever any link is clicked
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
             link.addEventListener('click', () => {
-                defaultCheckbox.checked = false;
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
             });
         });
     }
 }
 
-// Ensure execution happens after DOM loads
-document.addEventListener('DOMContentLoaded', () => {
-    closeMenuOnLinkClick();
+// Ensure execution happens reliably whether DOM is already loaded or not
+const initApp = () => {
+    initHamburgerMenu();
 
+    // Back to Top Button Logic
+    const backToTopBtn = document.getElementById('back-to-top');
+    if (backToTopBtn) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        });
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
     // Theme Toggle Logic
     const themeToggle = document.getElementById('themeToggle');
     const storedTheme = localStorage.getItem('theme');
@@ -48,11 +71,11 @@ document.addEventListener('DOMContentLoaded', () => {
         themeToggle.innerHTML = iconHTML;
     }
 
-    // Scroll Observer for Animations
+    // Scroll Observer for Animations (Trigger earlier on scroll)
     const observerOptions = {
         root: null,
-        rootMargin: '0px',
-        threshold: 0.1
+        rootMargin: '150px 0px 50px 0px', // Preloads animation earlier
+        threshold: 0.01 // Triggers almost instantly
     };
 
     const observer = new IntersectionObserver((entries, observer) => {
@@ -88,7 +111,14 @@ document.addEventListener('DOMContentLoaded', () => {
             glare: false
         });
     }
-});
+};
+
+// Bind execution safely
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
 
 // --- Categorized Gallery Reveal Logic ---
 const projectCategories = [
@@ -243,6 +273,27 @@ function initializeCategoryGallery() {
             }, 300);
         });
     }
+
+    // --- Handle Footer Category Links ---
+    const footerGalleryLinks = document.querySelectorAll('.footer-gallery-link');
+    footerGalleryLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            const catId = link.getAttribute('data-category');
+            const categoryObj = projectCategories.find(c => c.id === catId);
+            if (categoryObj) {
+                if (categoryReveal.classList.contains('active')) {
+                    categoryReveal.classList.remove('active');
+                    setTimeout(() => {
+                        categoryReveal.style.display = 'none';
+                        categoryGrid.style.display = 'grid'; // Need this to reset state properly
+                        openCategory(categoryObj);
+                    }, 300);
+                } else {
+                    openCategory(categoryObj);
+                }
+            }
+        });
+    });
 
     // --- 3. Lightbox Engine ---
     function openLightbox(index) {

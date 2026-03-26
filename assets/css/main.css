@@ -169,21 +169,41 @@ html[data-theme='dark'] {
     }
 
     .nav-container {
-        padding: 0 20px;
+        padding: 0 15px;
         position: relative;
+        height: 55px; /* Extremely compact height */
+        justify-content: space-between;
+    }
+    
+    .nav-logo {
+        padding: 0;
+        gap: 0.4rem;
+        flex: 1; /* Allow to claim available space naturally */
+    }
+
+    .logo-image {
+        height: 28px; /* Hardware-safe scaling */
+        flex-shrink: 0;
+    }
+
+    .logo-text {
+        font-size: 1rem; /* True responsive calculation for 300px+ width screens */
+        white-space: nowrap; /* Force single line logically */
+        /* Removed all manual hidden/ellipsis rules to ban the css bug */
     }
 
     .theme-toggle {
         margin-left: auto;
         margin-right: 15px;
-        /* Adds space before the hamburger */
         z-index: 1002;
+        flex-shrink: 0; /* Force buttons to never get squished by the text */
     }
 
     .hamburger {
         display: flex;
-        /* Make hamburger visible */
+        position: relative;
         z-index: 1002;
+        flex-shrink: 0; /* Force hamburger to never get squished */
     }
 
     .hamburger.active .bar:nth-child(2) {
@@ -587,7 +607,7 @@ html {
 }
 
 .hero-title {
-    font-size: 4rem;
+    font-size: clamp(2rem, 10vw, 4rem); /* Responsive fluid typography scaling */
     /* Reduced from 5rem */
     font-weight: 700;
     margin-bottom: 2rem;
@@ -1254,6 +1274,8 @@ html {
     flex-direction: column;
     gap: 2rem;
     height: auto;
+    overflow-wrap: break-word; /* Absolutely critical for the email string */
+    word-break: break-word;
 }
 
 .contact-details {
@@ -1704,4 +1726,72 @@ html {
 
 .animate-3d.delay-4 {
     transition-delay: 0.4s;
+}
+
+/* -------------------------------------- */
+/* Back To Top Button                     */
+/* -------------------------------------- */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: var(--nav-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--nav-border);
+    color: var(--text-primary);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    z-index: 999;
+}
+
+.back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.back-to-top:hover {
+    background: var(--text-primary);
+    color: var(--bg-primary);
+    transform: translateY(-5px);
+}
+
+/* -------------------------------------- */
+/* Mobile-specific Animation Adjustments  */
+/* -------------------------------------- */
+@media (max-width: 768px) {
+    /* Reduce the scroll travel distance and speed it up */
+    .animate-3d {
+        transform: perspective(1000px) rotateX(5deg) translateY(15px) scale(0.98);
+        transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s ease-out;
+    }
+
+    /* Kill staggered delays immediately so everything visible loads immediately when scrolled to */
+    .animate-3d.delay-1,
+    .animate-3d.delay-2,
+    .animate-3d.delay-3,
+    .animate-3d.delay-4 {
+        transition-delay: 0s;
+    }
+}
+
+/* -------------------------------------- */
+/* Global Layout Stabilization            */
+/* -------------------------------------- */
+html, body {
+    overflow-x: hidden !important;
+    width: 100%;
+    position: relative;
+    margin: 0;
+    padding: 0;
 }
